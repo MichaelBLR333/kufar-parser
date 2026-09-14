@@ -1,0 +1,9 @@
+{
+  "name": "kufar-parser",
+  "version": "1.0.0",
+  "main": "script.js",
+  "dependencies": {
+    "puppeteer": "^25.0.0",
+    "node-fetch": "^2.6.7"
+  }
+}
