@@ -1,12 +1,13 @@
 // Health-check сервер для Render
 const http = require('http');
-const PORT = process.env.PORT || 60000;
+const PORT = process.env.PORT || 10000;
 http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('OK');
 }).listen(PORT, () => {
     console.log(`Health check server on port ${PORT}`);
 });
+
 require('dotenv').config();
 const puppeteer = require('puppeteer');
 const fetch = require('node-fetch');
@@ -46,16 +47,16 @@ async function sendTelegramMessage(message) {
 sendTelegramMessage('Скрипт успешно запущен!');
 
 (async () => {
-   const browser = await puppeteer.launch({
-    headless: true,
-    args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage'
-    ]
-});
+    const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage'
+        ]
+    });
     const page = await browser.newPage();
-    console.log(`[${new Date().toISOString()}] Скрипт запущен, проверка будет выполняться каждые 10 секунд.`);
+    console.log(`[${new Date().toISOString()}] Скрипт запущен, проверка будет выполняться каждую минуту.`);
 
     let previousAds = [];
 
@@ -79,7 +80,6 @@ sendTelegramMessage('Скрипт успешно запущен!');
             });
 
             // Найти новые объявления
-            const newTitles = newAds.map(ad => ad.title);
             const oldTitles = previousAds.map(ad => ad.title);
             const newEntries = newAds.filter(ad => !oldTitles.includes(ad.title));
 
@@ -100,5 +100,5 @@ sendTelegramMessage('Скрипт успешно запущен!');
     }
 
     await checkForUpdates();
-    setInterval(checkForUpdates, 10 * 1000); // проверка каждые 10 секунд
+    setInterval(checkForUpdates, 60 * 1000); // проверка каждую минуту
 })();
