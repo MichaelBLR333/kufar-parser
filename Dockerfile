@@ -16,6 +16,6 @@ WORKDIR /app
 COPY package.json ./
 COPY script.js ./
 
-RUN npm install puppeteer node-fetch@2
+RUN npm install puppeteer node-fetch@2 dotenv
 
 CMD ["node", "script.js"]
