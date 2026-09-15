@@ -4,6 +4,7 @@
   "main": "script.js",
   "dependencies": {
     "puppeteer": "^25.0.0",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.7",
+    "dotenv": "^16.4.5"
   }
 }
