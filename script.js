@@ -37,7 +37,14 @@ async function sendTelegramMessage(message) {
 sendTelegramMessage('Скрипт успешно запущен!');
 
 (async () => {
-    const browser = await puppeteer.launch();
+   const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage'
+    ]
+});
     const page = await browser.newPage();
     console.log(`[${new Date().toISOString()}] Скрипт запущен, проверка будет выполняться каждые 10 секунд.`);
 
