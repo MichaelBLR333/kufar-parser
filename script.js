@@ -1,3 +1,12 @@
+// Health-check сервер для Render
+const http = require('http');
+const PORT = process.env.PORT || 60000;
+http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('OK');
+}).listen(PORT, () => {
+    console.log(`Health check server on port ${PORT}`);
+});
 require('dotenv').config();
 const puppeteer = require('puppeteer');
 const fetch = require('node-fetch');
@@ -53,7 +62,7 @@ sendTelegramMessage('Скрипт успешно запущен!');
     async function checkForUpdates() {
         try {
             console.log(`[${new Date().toISOString()}] Запуск проверки обновлений...`);
-            await page.goto(PAGE_URL, { waitUntil: 'networkidle2', timeout: 60000 });
+            await page.goto(PAGE_URL, { waitUntil: 'domcontentloaded', timeout: 120000 });
             const newAds = await page.evaluate(() => {
                 return Array.from(document.querySelectorAll('[class^="styles_wrapper_"]')).map(wrapper => {
                     const titleElement = wrapper.querySelector('[class^="styles_title_"]');
